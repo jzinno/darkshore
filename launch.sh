@@ -9,13 +9,6 @@
 #SBATCH --output=darkshore-log_%j.out
 
 
-module load anaconda3
-module load singularity/3.8.6
-module load nextflow/22.10.4
-
-eval "$(conda shell.bash hook)"
-conda deactivate
-
 if [ ! -d $PWD/nxf-scratch ]; then
     mkdir $PWD/nxf-scratch
 fi
