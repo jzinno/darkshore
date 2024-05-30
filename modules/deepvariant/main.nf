@@ -1,7 +1,7 @@
 process UGDeepVariantGPU {
     if ("${workflow.stubRun}" == "false") {
-        memory '56 GB'
-        cpus 10
+        memory '200 GB'
+        cpus 15
         accelerator 1
         clusterOptions '--gpus 1'
     }
@@ -23,10 +23,14 @@ process UGDeepVariantGPU {
 
     script:
     """
+    cp ${bam_file} /mnt/localdisk/${bam_file}
+    cp ${bam_index} /mnt/localdisk/${bam_index}
+
     pbrun deepvariant \
         --ref ${params.ref} \
-        --in-bam ${bam_file}  \
-        --out-variants ${bam_file.baseName}.g.vcf \
+        --in-bam /mnt/localdisk/${bam_file}  \
+        --out-variants /mnt/localdisk/${bam_file.baseName}.g.vcf \
+        --tmp-dir /mnt/localdisk/ \
         --num-gpus 1 \
         --pb-model-file /opt/deepvariant/models/ultima_v1.2_model_noTF32_2208_a10_noTF32.eng \
         --channel-hmer-deletion-quality \
@@ -50,14 +54,26 @@ process UGDeepVariantGPU {
         --vsc-turn-on-non-hmer-ins-proxy-support \
         --gpu-num-per-partition 1 \
         --run-partition \
-        --num-cpu-threads-per-stream 5 \
-        --num-streams-per-gpu 2 \
+        --num-cpu-threads-per-stream 6 \
+        --num-streams-per-gpu 5 \
+        --norealign-reads \
         --gvcf
 
-    bgzip -@${task.cpus} ${bam_file.baseName}.g.vcf
-    tabix -p vcf ${bam_file.baseName}.g.vcf.gz
+    if [ \$? -ne 0 ]; then
+        echo "DeepVariant failed"
+        exit 255
+    fi
+
+    bgzip -@${task.cpus} /mnt/localdisk/${bam_file.baseName}.g.vcf
+    tabix -p vcf /mnt/localdisk/${bam_file.baseName}.g.vcf.gz
+
+    rm /mnt/localdisk/${bam_file}
+    rm /mnt/localdisk/${bam_index}
+    rm /mnt/localdisk/${bam_file.baseName}.vcf
+
+    mv /mnt/localdisk/${bam_file.baseName}.g.vcf* .
     """
-  stub:
+stub:
     """
     touch ${bam_file.baseName}.g.vcf.gz
     touch ${bam_file.baseName}.g.vcf.gz.tbi
