@@ -155,7 +155,6 @@ Specialized pipeline for mitochondrial genome variant detection.
 | Parameter | Description | Default |
 |-----------|-------------|---------|
 | `chop` | Genomic interval size for parallelization (bp) | `100000000` |
-| `flow_mode` | Enable Oxford Nanopore mode (true) vs Illumina mode (false) | `true` |
 | `call_mito` | Enable mitochondrial variant calling | `false` |
 | `use_gpu` | Enable GPU acceleration for DeepVariant | `true` |
 
