@@ -1,0 +1,28 @@
+name: CalcCont
+description: Cross-contamination estimation for single-cell sequencing data using GATK
+keywords:
+  - contamination
+  - quality control
+  - gatk
+  - single-cell
+tools:
+  - gatk:
+      description: Genome Analysis Toolkit for variant discovery and genotyping
+      homepage: https://gatk.broadinstitute.org/
+      documentation: https://gatk.broadinstitute.org/hc/en-us
+input:
+  - bam_file:
+      type: file
+      description: Deduplicated BAM alignment file
+      pattern: "*.bam"
+  - bam_index:
+      type: file
+      description: BAM index file
+      pattern: "*.bam.bai"
+output:
+  - crosscont_table:
+      type: file
+      description: Cross-contamination estimation table
+      pattern: "*.crosscont.table"
+authors:
+  - "@jzinno"

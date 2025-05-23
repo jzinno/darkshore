@@ -1,0 +1,28 @@
+name: RNAMultiQC
+description: Aggregate RNA-seq quality control reports from multiple bioinformatics tools
+keywords:
+  - quality control
+  - multiqc
+  - report
+  - rna-seq
+tools:
+  - multiqc:
+      description: Aggregate results from bioinformatics analyses across many samples into a single report
+      homepage: https://multiqc.info/
+      documentation: https://multiqc.info/docs/
+input:
+  - fastp_data:
+      type: file
+      description: List of FastP output files
+      pattern: "*"
+  - star_data:
+      type: file  
+      description: List of STAR output files
+      pattern: "*"
+output:
+  - multiqc_report:
+      type: file
+      description: Comprehensive HTML quality control report
+      pattern: "*_multiqc_report.html"
+authors:
+  - "@jzinno"

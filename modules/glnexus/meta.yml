@@ -1,0 +1,28 @@
+name: GLNexus
+description: Scalable joint variant calling for population-scale genomics from DeepVariant gVCF files
+keywords:
+  - joint calling
+  - variant calling
+  - population genomics
+  - gvcf
+tools:
+  - glnexus:
+      description: Scalable joint variant calling for population-scale genomics
+      homepage: https://github.com/dnanexus-rnd/GLnexus
+      documentation: https://github.com/dnanexus-rnd/GLnexus/wiki
+input:
+  - gvcf_list:
+      type: file
+      description: List of GVCF files for joint calling
+      pattern: "*.txt"
+output:
+  - joint_vcf:
+      type: file
+      description: Joint-called multi-sample VCF file
+      pattern: "*.glnexus.vcf.gz"
+  - tbi:
+      type: file
+      description: Tabix index for joint VCF file
+      pattern: "*.glnexus.vcf.gz.tbi"
+authors:
+  - "@jzinno"

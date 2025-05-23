@@ -1,0 +1,36 @@
+name: Star
+description: Spliced Transcripts Alignment to a Reference - ultra-fast RNA-seq aligner
+keywords:
+  - alignment
+  - rna-seq
+  - star
+  - spliced alignment
+tools:
+  - star:
+      description: Spliced Transcripts Alignment to a Reference
+      homepage: https://github.com/alexdobin/STAR
+      documentation: https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf
+input:
+  - trimmed:
+      type: file
+      description: Quality trimmed FASTQ files (paired-end R1/R2)
+      pattern: "*.{fastq,fq}.gz"
+output:
+  - star_bam:
+      type: file
+      description: Coordinate sorted BAM alignment file
+      pattern: "*.Aligned.sortedByCoord.out.bam"
+  - star_bai:
+      type: file
+      description: BAM index file
+      pattern: "*.Aligned.sortedByCoord.out.bam.bai"
+  - star_log:
+      type: file
+      description: STAR alignment summary statistics
+      pattern: "*.Log.final.out"
+  - star_sj:
+      type: file
+      description: Splice junction coordinates
+      pattern: "*.SJ.out.tab"
+authors:
+  - "@jzinno"

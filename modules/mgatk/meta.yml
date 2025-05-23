@@ -1,0 +1,28 @@
+name: MitoCall
+description: Mitochondrial genome variant calling for single-cell sequencing data
+keywords:
+  - mitochondrial
+  - variant calling
+  - single-cell
+  - mgatk
+tools:
+  - mgatk:
+      description: Mitochondrial genome analysis toolkit for single-cell sequencing
+      homepage: https://github.com/caleblareau/mgatk
+      documentation: https://mgatk.readthedocs.io/
+input:
+  - mgatk_bams:
+      type: file
+      description: BAM alignment files for mitochondrial analysis
+      pattern: "*.bam"
+  - mgatk_bais:
+      type: file
+      description: BAM index files
+      pattern: "*.bam.bai"
+output:
+  - final:
+      type: directory
+      description: Mitochondrial variant calls and quality metrics
+      pattern: "final/*"
+authors:
+  - "@jzinno"

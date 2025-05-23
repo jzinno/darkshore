@@ -1,0 +1,28 @@
+name: Annovar
+description: Functional annotation of genetic variants using multiple annotation databases
+keywords:
+  - variant annotation
+  - functional annotation
+  - vcf
+  - genomics
+tools:
+  - annovar:
+      description: Tool to utilize update-to-date information to functionally annotate genetic variants
+      homepage: https://annovar.openbioinformatics.org/
+      documentation: https://annovar.openbioinformatics.org/en/latest/
+input:
+  - variant_file:
+      type: file
+      description: Input VCF file containing variants to annotate
+      pattern: "*.vcf.gz"
+output:
+  - annovar_vcf:
+      type: file
+      description: Functionally annotated VCF file
+      pattern: "*.hg38_multianno.vcf.gz"
+  - tbi:
+      type: file
+      description: Tabix index for annotated VCF file
+      pattern: "*.hg38_multianno.vcf.gz.tbi"
+authors:
+  - "@jzinno"

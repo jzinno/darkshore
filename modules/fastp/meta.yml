@@ -1,0 +1,36 @@
+name: FastP
+description: Ultra-fast all-in-one FASTQ preprocessor for quality control and adapter trimming
+keywords:
+  - quality control
+  - preprocessing
+  - adapter trimming
+  - fastq
+tools:
+  - fastp:
+      description: A tool designed to provide fast all-in-one preprocessing for FastQ files
+      homepage: https://github.com/OpenGene/fastp
+      documentation: https://github.com/OpenGene/fastp
+input:
+  - fastqs:
+      type: file
+      description: Input FASTQ files (paired-end R1/R2)
+      pattern: "*.{fastq,fq}.gz"
+output:
+  - trimmed:
+      type: file
+      description: Quality trimmed and adapter removed FASTQ files
+      pattern: "*.fastp.fastq.gz"
+  - fastp_json:
+      type: file
+      description: FastP report in JSON format
+      pattern: "*.json"
+  - html:
+      type: file
+      description: FastP HTML report
+      pattern: "*.fastp.html"
+  - failed:
+      type: file
+      description: Reads that failed quality filtering
+      pattern: "*.fastp.failed.fastq.gz"
+authors:
+  - "@jzinno"

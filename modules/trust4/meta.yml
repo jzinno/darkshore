@@ -1,0 +1,57 @@
+name: Trust4
+description: T Cell Receptor Utilities for Solid Tissue/Tumor - TCR and BCR assembly from RNA-seq data
+keywords:
+  - tcr
+  - bcr
+  - immune receptor
+  - rna-seq
+  - t cell receptor
+tools:
+  - trust4:
+      description: T cell Receptor Utilities for Solid Tissue/Tumor
+      homepage: https://github.com/liulab-dfci/TRUST4
+      documentation: https://github.com/liulab-dfci/TRUST4
+input:
+  - trimmed:
+      type: file
+      description: Quality trimmed paired-end FASTQ files
+      pattern: "*.fastq.gz"
+output:
+  - airr_align:
+      type: file
+      description: AIRR format alignment file
+      pattern: "*_airr_align.tsv"
+  - airr:
+      type: file
+      description: AIRR format output file
+      pattern: "*_airr.tsv"
+  - annot:
+      type: file
+      description: Annotated assembled sequences
+      pattern: "*_annot.fa"
+  - assembled_reads:
+      type: file
+      description: Assembled immune receptor sequences
+      pattern: "*_assembled_reads.fa"
+  - cdr3:
+      type: file
+      description: CDR3 sequences and statistics
+      pattern: "*_cdr3.out"
+  - final:
+      type: file
+      description: Final assembled immune receptor sequences
+      pattern: "*_final.out"
+  - raw:
+      type: file
+      description: Raw assembly output
+      pattern: "*_raw.out"
+  - report:
+      type: file
+      description: Assembly summary report
+      pattern: "*_report.tsv"
+  - toassemble:
+      type: file
+      description: Reads selected for assembly
+      pattern: "*_toassemble_*.fq"
+authors:
+  - "@jzinno"

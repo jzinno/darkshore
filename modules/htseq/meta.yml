@@ -1,0 +1,24 @@
+name: HTSeq
+description: Count reads overlapping genomic features from RNA-seq BAM files
+keywords:
+  - gene expression
+  - quantification
+  - rna-seq
+  - count matrix
+tools:
+  - htseq:
+      description: A Python package for analyzing high-throughput sequencing data
+      homepage: https://htseq.readthedocs.io/
+      documentation: https://htseq.readthedocs.io/en/latest/
+input:
+  - bam:
+      type: file
+      description: Coordinate sorted BAM alignment file
+      pattern: "*.bam"
+output:
+  - htseq_counts:
+      type: file
+      description: Gene expression count matrix
+      pattern: "*.counts"
+authors:
+  - "@jzinno"

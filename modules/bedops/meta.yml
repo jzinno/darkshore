@@ -1,0 +1,48 @@
+name: BedOps
+description: Genomic interval operations and VCF file manipulation utilities
+keywords:
+  - genomic intervals
+  - vcf processing
+  - bed files
+  - file splitting
+tools:
+  - bedops:
+      description: High-performance genomic feature operations
+      homepage: https://bedops.readthedocs.io/
+      documentation: https://bedops.readthedocs.io/en/latest/
+  - bcftools:
+      description: Utilities for variant calling and manipulating VCF files
+      homepage: http://samtools.github.io/bcftools/
+      documentation: http://samtools.github.io/bcftools/bcftools.html
+input:
+  - ref_idx:
+      type: file
+      description: Reference genome index file for interval generation
+      pattern: "*.fai"
+  - joint_vcf:
+      type: file
+      description: Joint-called VCF file to split into intervals
+      pattern: "*.vcf.gz"
+  - annos:
+      type: file
+      description: List of annotated VCF files to merge
+      pattern: "*"
+output:
+  - intervals:
+      type: file
+      description: Genomic intervals for parallelization
+      pattern: "intervals.bed"
+  - split_vcf:
+      type: file
+      description: VCF file split by genomic interval
+      pattern: "*_chr*.vcf.gz"
+  - merged_vcf:
+      type: file
+      description: Final merged and annotated VCF file
+      pattern: "*.vcf.gz"
+  - merged_vcf_tbi:
+      type: file
+      description: Tabix index for merged VCF file
+      pattern: "*.vcf.gz.tbi"
+authors:
+  - "@jzinno"
