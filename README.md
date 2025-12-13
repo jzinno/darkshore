@@ -99,12 +99,12 @@ nextflow workflows/scRNA.nf --rna_fastq_table <rna_fastq_pairs> --sample_id <sam
 
 ### Config overrides
 
-It might be necessary to override the default config for certain processes. For example, on our cluster, our older cpus do not support `AVX512` instructions, this makes running `UGDeepVariantCPU` very slow when allocated to these nodes, so we need to override the default cluster options to select nodes with newer CPU architectures via thier feature flags (here`v4|v5` selects nodes with `AVX512` support).
+It might be necessary to override the default config for certain processes. For example, on our cluster, our older cpus do not support `AVX512` instructions, this makes running `UGDeepVariantCPU` very slow when allocated to these nodes, so we need to override the default cluster options to select nodes with newer CPU architectures via thier feature flags (here`v5|v6` selects nodes with `AVX512` support).
 
 ```bash
 process {
     ...
-    withName: UGDeepVariantCPU { clusterOptions = '-C "v4|v5"' }
+    withName: UGDeepVariantCPU { clusterOptions = '-C "v5|v6"' }
 }
 ```
 
