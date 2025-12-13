@@ -12,7 +12,7 @@ broadinstitute/gatk:4.5.0.0
 
 [NVIDIA Clara Parabricks](https://www.nvidia.com/en-us/clara/genomics/)
 
-With some added tools (bgzip and tabix)
+With some additional tools (bgzip and tabix)
 ```
 zinno/parabricks:4.2.1-1b
 ```
