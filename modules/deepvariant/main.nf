@@ -54,7 +54,7 @@ process UGDeepVariantGPU {
         --num-streams-per-gpu 2 \
         --gvcf
 
-    bgzip -@${task.cpus} ${bam_file.baseName}.g.vcf
+    bgzip -f -@${task.cpus} ${bam_file.baseName}.g.vcf
     tabix -p vcf ${bam_file.baseName}.g.vcf.gz
     """
   stub:
@@ -117,8 +117,9 @@ process UGDeepVariantCPU {
 process ILDeepVariant {
     if ("${workflow.stubRun}" == "false") {
         memory '56 GB'
-        cpus 10
+        cpus 8
         accelerator 1
+        clusterOptions '--gres gpu:1'
     }
 
     tag 'il-deepvariant'
@@ -142,14 +143,14 @@ process ILDeepVariant {
         --ref ${params.ref} \
         --in-bam ${bam_file}  \
         --out-variants ${bam_file.baseName}.g.vcf \
-        --num-gpus ${task.accelerator} \
+        --num-gpus 1 \
         --gpu-num-per-partition 1 \
         --run-partition \
-        --num-cpu-threads-per-stream 5 \
+        --num-cpu-threads-per-stream 4 \
         --num-streams-per-gpu 2 \
         --gvcf
 
-    bgzip -@${task.cpus} ${bam_file.baseName}.g.vcf
+    bgzip -f -@${task.cpus} ${bam_file.baseName}.g.vcf
     tabix -p vcf ${bam_file.baseName}.g.vcf.gz
     """
   stub:

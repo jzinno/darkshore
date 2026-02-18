@@ -58,6 +58,40 @@ process SplitVCF {
 
 }
 
+process SplitGVCF {
+    if ("${workflow.stubRun}" == "false") {
+        memory '2 GB'
+        cpus 1
+    }
+
+    tag 'bedops'
+
+    container 'docker://zinno/bioutils:latest'
+
+    publishDir "${params.out}/gvcf_chunks", mode: 'symlink'
+
+    input:
+    tuple val(interval), path(gvcf)
+
+    output:
+    tuple val(interval),
+        path("${gvcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.g.vcf.gz"),
+        path("${gvcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.g.vcf.gz.tbi"),
+        emit: split_gvcf
+
+    script:
+    """
+    ln -s \$(readlink -f ${gvcf}).tbi .
+    bcftools view -r ${interval.trim()} ${gvcf} -Oz > ${gvcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.g.vcf.gz
+    tabix -p vcf ${gvcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.g.vcf.gz
+    """
+    stub:
+    """
+    touch ${gvcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.g.vcf.gz
+    touch ${gvcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.g.vcf.gz.tbi
+    """
+}
+
 process MergeVCFs {
     if ("${workflow.stubRun}" == "false") {
         memory '64 GB'
