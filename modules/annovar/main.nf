@@ -1,6 +1,6 @@
 process Annovar {
     if ("${workflow.stubRun}" == "false") {
-        memory '16 GB'
+        memory  { 16.GB * task.attempt }
         cpus 4
     }
     tag "annotation"
@@ -13,16 +13,20 @@ process Annovar {
     path(variant_file)
 
     output:
-    path("${variant_file.simpleName}.hg38_multianno.vcf.gz"), emit: annovar_vcf
-    path("${variant_file.simpleName}.hg38_multianno.vcf.gz.tbi")
+    path("*.hg38_multianno.vcf.gz"), emit: annovar_vcf
+    path("*.hg38_multianno.vcf.gz.tbi")
 
     script:
     """
+    prefix=\$(basename ${variant_file})
+    prefix=\${prefix%.vcf.gz}
+    prefix=\${prefix%.vcf}
+
     table_annovar.pl \
         ${variant_file} \
         ${params.resource_dir}/humandb/ \
         -buildver hg38 \
-        -out ${variant_file.simpleName} \
+        -out \${prefix} \
         -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320,gnomad40_genome \
         -remove \
         -operation g,f,f,f,f,f,f \
@@ -30,15 +34,18 @@ process Annovar {
         -vcfinput \
         -thread ${task.cpus}
 
-    bgzip -@${task.cpus} ${variant_file.simpleName}.hg38_multianno.vcf
-    tabix -p vcf ${variant_file.simpleName}.hg38_multianno.vcf.gz
-    rm ${variant_file.simpleName}.avinput
-    rm ${variant_file.simpleName}.hg38_multianno.txt
+    bgzip -@${task.cpus} \${prefix}.hg38_multianno.vcf
+    tabix -p vcf \${prefix}.hg38_multianno.vcf.gz
+    rm \${prefix}.avinput
+    rm \${prefix}.hg38_multianno.txt
     """
     stub:
     """
-    touch ${variant_file.simpleName}.hg38_multianno.vcf.gz
-    touch ${variant_file.simpleName}.hg38_multianno.vcf.gz.tbi
+    prefix=\$(basename ${variant_file})
+    prefix=\${prefix%.vcf.gz}
+    prefix=\${prefix%.vcf}
+    touch \${prefix}.hg38_multianno.vcf.gz
+    touch \${prefix}.hg38_multianno.vcf.gz.tbi
     """
 
 }
