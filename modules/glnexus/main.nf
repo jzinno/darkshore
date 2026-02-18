@@ -70,11 +70,11 @@ process GLNexusChunk {
     """
     ls -1 *.g.vcf.gz > gvcfs.${interval.replaceAll("[:-]", "_").trim()}.txt
 
-    glnexus_cli \\
-        --config ${params.glnexus_config} \\
-        --list gvcfs.${interval.replaceAll("[:-]", "_").trim()}.txt \\
-        --threads ${task.cpus} \\
-        --mem-gbytes ${task.memory.toGiga()} \\
+    glnexus_cli \
+        --config ${params.glnexus_config} \
+        --list gvcfs.${interval.replaceAll("[:-]", "_").trim()}.txt \
+        --threads ${task.cpus} \
+        --mem-gbytes ${task.memory.toGiga()} \
         > ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.bcf
 
     bcftools view ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.bcf -Oz > ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
@@ -84,6 +84,7 @@ process GLNexusChunk {
     """
     stub:
     """
+    ls -1 *.g.vcf.gz > gvcfs.${interval.replaceAll("[:-]", "_").trim()}.txt
     touch ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
     touch ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.vcf.gz.tbi
     """
