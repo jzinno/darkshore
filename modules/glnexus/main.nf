@@ -1,5 +1,9 @@
 params.glnexus_config = "${moduleDir}/darkshore.glnexus.yml"
 
+def interval_key(interval) {
+    interval.toString().trim().replace(':', '_').replace('-', '_')
+}
+
 process GLNexus {
     if ("${workflow.stubRun}" == "false") {
         memory "512 GB"
@@ -49,7 +53,7 @@ process GLNexusChunk {
         cpus 4
         time "7d"
     }
-    tag "glnexus_${interval.replaceAll("[:-]", "_").trim()}"
+    tag "glnexus_${interval_key(interval)}"
 
     container 'docker://zinno/glnexus:latest'
 
@@ -60,32 +64,32 @@ process GLNexusChunk {
 
     output:
     tuple val(interval),
-        path("${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.vcf.gz"),
+        path("${params.sample_id}_${interval_key(interval)}.vcf.gz"),
         emit: chunk_joint_vcf
     tuple val(interval),
-        path("${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.vcf.gz.tbi"),
+        path("${params.sample_id}_${interval_key(interval)}.vcf.gz.tbi"),
         emit: chunk_joint_vcf_tbi
 
     script:
     """
-    ls -1 *.g.vcf.gz > gvcfs.${interval.replaceAll("[:-]", "_").trim()}.txt
+    ls -1 *.g.vcf.gz > gvcfs.${interval_key(interval)}.txt
 
     glnexus_cli \
         --config ${params.glnexus_config} \
-        --list gvcfs.${interval.replaceAll("[:-]", "_").trim()}.txt \
+        --list gvcfs.${interval_key(interval)}.txt \
         --threads ${task.cpus} \
         --mem-gbytes ${task.memory.toGiga()} \
-        > ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.bcf
+        > ${params.sample_id}_${interval_key(interval)}.bcf
 
-    bcftools view ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.bcf -Oz > ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
-    tabix -p vcf ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
-    rm ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.bcf
+    bcftools view ${params.sample_id}_${interval_key(interval)}.bcf -Oz > ${params.sample_id}_${interval_key(interval)}.vcf.gz
+    tabix -p vcf ${params.sample_id}_${interval_key(interval)}.vcf.gz
+    rm ${params.sample_id}_${interval_key(interval)}.bcf
     rm -rf GLnexus.DB
     """
     stub:
     """
-    ls -1 *.g.vcf.gz > gvcfs.${interval.replaceAll("[:-]", "_").trim()}.txt
-    touch ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
-    touch ${params.sample_id}.glnexus.${interval.replaceAll("[:-]", "_").trim()}.vcf.gz.tbi
+    ls -1 *.g.vcf.gz > gvcfs.${interval_key(interval)}.txt
+    touch ${params.sample_id}_${interval_key(interval)}.vcf.gz
+    touch ${params.sample_id}_${interval_key(interval)}.vcf.gz.tbi
     """
 }
