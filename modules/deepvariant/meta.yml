@@ -1,4 +1,0 @@
-name: UGDeepVariant
-description: A Nextflow module to run the DeepVariant variant caller using the Clara Parabricks platform on a GPU.
-keywords: [Nextflow, DeepVariant, Clara Parabricks, GPU, variant calling]
-authors: [John Zinno]
