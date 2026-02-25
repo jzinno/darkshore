@@ -12,7 +12,7 @@ in support of the preprint: [Large scale single-cell phylogenetic mapping of clo
 ```bash
    git clone https://github.com/jzinno/darkshore.git && cd darkshore
 
-   nextflow workflows/scVC.nf -stub-run -profile stub
+   nextflow run workflows/scVC.nf -profile test -stub
 
    #explore example output
    tree -C output
