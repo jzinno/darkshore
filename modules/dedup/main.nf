@@ -1,9 +1,5 @@
 process FlowMarkDuplicates {
-    if ("${workflow.stubRun}" == "false") {
-        memory '16 GB'
-        cpus 2
-    }
-
+    label 'dedup'
     tag 'dedup'
 
     container 'docker://broadinstitute/gatk:4.5.0.0'

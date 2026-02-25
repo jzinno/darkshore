@@ -1,8 +1,5 @@
 process Star {
-    if ("${workflow.stubRun}" == "false") {
-        memory "32 GB"
-        cpus 6
-    }
+    label 'large'
     tag "align"
 
     container 'docker://zinno/rnatools:latest'
@@ -48,10 +45,7 @@ process Star {
 }
 
 process StarTE {
-    if ("${workflow.stubRun}" == "false") {
-        memory "32 GB"
-        cpus 6
-    }
+    label 'large'
     tag "align"
 
     container 'docker://zinno/rnatools:latest'

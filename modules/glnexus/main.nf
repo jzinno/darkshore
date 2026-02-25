@@ -5,11 +5,7 @@ def interval_key(interval) {
 }
 
 process GLNexus {
-    if ("${workflow.stubRun}" == "false") {
-        memory "512 GB"
-        cpus 32
-        time "7d"
-    }
+    label 'jumbo'
     tag "glnexus"
 
     container 'docker://zinno/glnexus:latest'
@@ -48,11 +44,8 @@ process GLNexus {
 }
 
 process GLNexusChunk {
-    if ("${workflow.stubRun}" == "false") {
-        memory "16 GB"
-        cpus 4
-        time "7d"
-    }
+    label 'medium'
+    time '7d'
     tag "glnexus_${interval_key(interval)}"
 
     container 'docker://zinno/glnexus:latest'

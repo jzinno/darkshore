@@ -1,8 +1,5 @@
 process Annovar {
-    if ("${workflow.stubRun}" == "false") {
-        memory  { 16.GB * task.attempt }
-        cpus 4
-    }
+    label 'medium'
     tag "annotation"
 
     container 'docker://zinno/annovar:latest'
@@ -24,7 +21,7 @@ process Annovar {
 
     table_annovar.pl \
         ${variant_file} \
-        ${params.resource_dir}/humandb/ \
+        ${params.ref_bundle}/humandb/ \
         -buildver hg38 \
         -out \${prefix} \
         -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320,gnomad40_genome \

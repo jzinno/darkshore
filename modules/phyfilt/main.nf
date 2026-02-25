@@ -1,8 +1,5 @@
 process PreFilter {
-    if ("${workflow.stubRun}" == "false") {
-        memory '16 GB'
-        cpus 4
-    }
+    label 'medium'
     tag "filtering"
 
     container 'docker://zinno/bioutils:latest'
@@ -33,10 +30,7 @@ process PreFilter {
 }
 
 process AnnoFilter {
-    if ("${workflow.stubRun}" == "false") {
-        memory '16 GB'
-        cpus 4
-    }
+    label 'medium'
     tag "filtering"
 
     container 'docker://zinno/bioutils:latest'
@@ -67,10 +61,7 @@ process AnnoFilter {
 }
 
 process Phyfilt {
-    if ("${workflow.stubRun}" == "false") {
-        memory '16 GB'
-        cpus 4
-    }
+    label 'medium'
     tag "filtering"
 
     container 'docker://zinno/bioutils:latest'

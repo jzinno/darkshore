@@ -3,11 +3,7 @@ def interval_key(interval) {
 }
 
 process GenerateIntervals {
-    if ("${workflow.stubRun}" == "false") {
-        memory '2 GB'
-        cpus 1
-    }
-
+    label 'small'
     tag 'bedops'
 
     container 'docker://zinno/bioutils:latest'
@@ -74,11 +70,7 @@ EOF
 }
 
 process SplitVCF {
-    if ("${workflow.stubRun}" == "false") {
-        memory '2 GB'
-        cpus 1
-    }
-
+    label 'small'
     tag 'bedops'
 
     container 'docker://zinno/bioutils:latest'
@@ -106,11 +98,7 @@ process SplitVCF {
 }
 
 process SplitGVCF {
-    if ("${workflow.stubRun}" == "false") {
-        memory '2 GB'
-        cpus 1
-    }
-
+    label 'small'
     tag 'bedops'
 
     container 'docker://zinno/bioutils:latest'
@@ -140,11 +128,7 @@ process SplitGVCF {
 }
 
 process MergeVCFs {
-    if ("${workflow.stubRun}" == "false") {
-        memory '64 GB'
-        cpus 4
-    }
-
+    label 'xlarge'
     tag 'bedops'
 
     container 'docker://zinno/bioutils:latest'
