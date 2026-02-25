@@ -1,8 +1,5 @@
 process TEcount {
-    if ("${workflow.stubRun}" == "false") {
-        memory "8 GB"
-        cpus 1
-    }
+    label 'small'
     tag "align"
 
     container 'docker://zinno/tetranscripts:latest'

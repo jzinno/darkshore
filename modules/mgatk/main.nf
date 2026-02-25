@@ -1,9 +1,5 @@
 process MitoCall {
-    if ("${workflow.stubRun}" == "false") {
-        memory '100 GB'
-        cpus 20
-    }
-
+    label 'highmem'
     container 'docker://zinno/mgatk:latest'
 
     tag 'mgatk'

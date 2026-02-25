@@ -1,10 +1,7 @@
 params.multiqc_config = "${moduleDir}/multiqc_config.yml"
 
 process RNAMultiQC {
-    if ("${workflow.stubRun}" == "false") {
-        memory "16 GB"
-        cpus 4
-    }
+    label 'medium'
     tag "report"
 
     container 'docker://zinno/rnatools:latest'

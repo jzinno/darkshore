@@ -1,4 +1,0 @@
-name: MarkDuplicatesSpark
-description: A Nextflow module to mark duplicates in a BAM file using GATK's MarkDuplicatesSpark.
-keywords: [Nextflow, GATK, MarkDuplicatesSpark, BAM, bioinformatics]
-authors: [John Zinno]

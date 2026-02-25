@@ -1,10 +1,7 @@
 params.adapters = "${moduleDir}/adapters.fasta"
 
 process FastP {
-    if ("${workflow.stubRun}" == "false") {
-        memory "8 GB"
-        cpus 4
-    }
+    label 'trim'
     tag "trimming"
 
     container 'docker://zinno/rnatools:latest'

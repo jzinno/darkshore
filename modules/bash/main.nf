@@ -1,8 +1,5 @@
 process MergeCounts {
-    if ("${workflow.stubRun}" == "false") {
-        memory "4 GB"
-        cpus 1
-    }
+    label 'small'
     tag "collate"
 
     publishDir "${params.out}/matrix", mode: 'symlink'
@@ -24,10 +21,7 @@ process MergeCounts {
 }
 
 process MergeCountsTE {
-    if ("${workflow.stubRun}" == "false") {
-        memory "4 GB"
-        cpus 1
-    }
+    label 'small'
     tag "collate"
 
     publishDir "${params.out}/matrix", mode: 'symlink'
@@ -49,10 +43,7 @@ process MergeCountsTE {
 }
 
 process VarCount {
-    if ("${workflow.stubRun}" == "false") {
-        memory "4 GB"
-        cpus 1
-    }
+    label 'small'
     tag "nrnv"
 
     publishDir "${params.out}/varcount", mode: 'symlink'

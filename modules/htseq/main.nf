@@ -1,8 +1,5 @@
 process HTSeq {
-    if ("${workflow.stubRun}" == "false") {
-        memory "4 GB"
-        cpus 1
-    }
+    label 'small'
     tag "count"
 
     container 'docker://zinno/rnatools:latest'

@@ -1,8 +1,5 @@
 process Trust4 {
-    if ("${workflow.stubRun}" == "false") {
-        memory "32 GB"
-        cpus 6
-    }
+    label 'large'
     tag "tcr"
 
     container 'docker://zinno/trust4:1.1.5'

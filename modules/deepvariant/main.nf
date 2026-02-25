@@ -1,11 +1,5 @@
 process UGDeepVariantGPU {
-    if ("${workflow.stubRun}" == "false") {
-        memory '56 GB'
-        cpus 8
-        accelerator 1
-        clusterOptions '--gres gpu:1'
-    }
-
+    label 'gpu'
     tag 'ug-deepvariant'
 
     container 'docker://zinno/ugdvnv:revendreth'
@@ -65,11 +59,7 @@ process UGDeepVariantGPU {
 }
 
 process UGDeepVariantCPU {
-    if ("${workflow.stubRun}" == "false") {
-        memory '32 GB'
-        cpus 7
-    }
-
+    label 'large'
     tag 'ug-deepvariant'
 
     container 'docker://zinno/ugdv:latest'
@@ -115,13 +105,7 @@ process UGDeepVariantCPU {
 }
 
 process ILDeepVariant {
-    if ("${workflow.stubRun}" == "false") {
-        memory '56 GB'
-        cpus 8
-        accelerator 1
-        clusterOptions '--gres gpu:1'
-    }
-
+    label 'gpu'
     tag 'il-deepvariant'
 
     container 'docker://zinno/parabricks:4.2.1-1b'
